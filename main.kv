@@ -1,0 +1,132 @@
+#: import NoTransition kivy.uix.screenmanager.NoTransition
+
+RootWidget:
+    mainscreen__: mainscreenid
+    MainScreen:
+        id: mainscreenid
+        name: "main"
+        
+    colourscreen:
+        name: "colour"
+    patternscreen:
+        name: "Pattern"
+        
+    
+<MainScreen>:
+    colourbutton: colourbutton
+    
+    BoxLayout:
+        orientation: "vertical"
+        padding: dp(80)
+        canvas:
+            Color:
+                rgba: 0.5,0,0,0.5
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        Label:
+            text: "Homescreen"
+            size_hint_y: None
+        BoxLayout:
+            orientation: "vertical"
+            spacing: dp(50)
+            padding: dp(20)
+            Button:
+                id: colourbutton
+                background_down:
+                on_press: root.colourbutton.text = "There we go!"
+                on_press: root.animate_button(self)
+                background_normal: ''
+                background_color: 1,1,1,0.50
+                text: "Kleur"
+                on_release:                   
+                    root.manager.transition = NoTransition()
+                    root.colourbutton.text = "Kleur"
+                    #root.background_color: 1,1,1,0.50
+                    app.root.previousscreen = root.manager.current
+                    
+                    root.manager.current = "colour"
+                  
+            Button:
+                background_down:
+                background_normal: ''
+                background_color: 0,0,1, 0.50
+                text: "patroon"
+                on_release:
+                    root.manager.transition = NoTransition()
+                    app.root.previousscreen = root.manager.current
+                    root.manager.current = "Pattern"
+            
+            FloatButton:
+                id: cta
+                text: 'Bluetooth'        
+           # Button:
+           #     text: "Bluetooth connector"
+           #     on_release:
+           #         root.connectbluetooth()
+           #     size_hint: 0.5,1
+           #     pos_hint: {'center_x':.5}    
+<colourscreen>:
+    colorpicker: colorpicker
+    searchbar: searchbar
+    BoxLayout:
+        id: box
+        orientation: "vertical"
+        padding: dp(50)
+        canvas:
+            Color:
+                rgba: root.color
+            Rectangle:
+                size: self.size
+                pos: self.pos
+        MDTextFieldRound:
+            id: searchbar
+            hint_text: "Search Color"
+            icon_left: "magnify"
+            pos_hint: {'center_x': .5}
+            icon_type: "left"
+            on_text_validate: 
+                root.searchcolor()
+            icon_left_disabled: True
+        BoxLayout:
+            ColorWheel:
+                id: colorpicker
+                on_color: 
+                    root.color = root.colorpicker.color
+        Button:
+            on_release: 
+                root.sentcolour()
+                app.root.mainscreen__.sentcolor()
+            text: 'Kies je kleur'
+            color: 0.435, 0.725, 0.56, 1
+            background_color: 0, 0.26, 0.27, 1
+            size_hint: 1.0, 0.2
+
+
+<FloatButton@FloatLayout>:
+    id: float_root
+    size_hint: (None, None)
+    text: ''
+    btn_size: (100,100)
+    size:(100,100)
+    bg_color: (0.404, 0.227, 0.718 ,1)
+    Button:
+        text: float_root.text
+        markup: True
+        size_hint: (None, None)
+        size: float_root.btn_size
+        pos_hint: {'x': .8 , 'y': 0.5}
+        background_normal: ''
+        background_color: 0, 0, 0, 0
+        canvas.before:
+            Color:
+                rgba: float_root.bg_color
+            Ellipse:
+                size: self.size
+                pos: self.pos
+
+https://www.youtube.com/watch?v=23ffGS_J4kk
+# Hier staat wat ik wil maar ook die lukt net niet
+<patternscreen>:
+    Label:
+        

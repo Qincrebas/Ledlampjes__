@@ -1,0 +1,76 @@
+# HANDLEIDING (voor ubuntu, windows? geen idee)
+
+
+# open de terminal
+# update pip
+pip install --upgrade pip --user
+
+# maak een map om in te werken
+mkdir wow  # of verzin een betere naam
+cd wow
+
+# zet je bestanden in de map, dit moeten minstens zijn: een bestaand main.py, main.kv en 
+# buildozer.spec (de bestanden moeten echt per se "main" heten)
+
+# Nu een virtual environment aanmaken, omdat te doen hebben we de volgende instalaties nodig
+# hopelijk is deze stap niet nodig op de pcs van de uni, omdat t daar al geinstalleerd is?
+# probeer eerst deze stap over te slaan
+sudo apt-get install python3-venv			 
+python3 -m pip install --user virtualenv 	# ik weet niet zeker of deze nodig is
+
+# maak de virual environment
+python3 -m venv env
+
+# lukt dit niet, dan kijken onder het kopje "virtualenv" hier:
+# https://helpdesk.strw.leidenuniv.nl/wiki/doku.php?id=working_with_python
+
+# activeer de virtual environment
+source env/bin/activate
+
+# update de pip versie in de virtual environment
+pip install --upgrade pip
+
+# installeer packages in de virtal environment
+pip install cython 		
+pip install kivy		
+pip install kivymd		# kivy Material Design, voor de looks
+pip install buildozer   # alleen nodig voor t maken van de app, niet om te runnen op desktop
+pip install jnius 		# voor bluetooth
+
+# Om te runnen op desktop
+python3 main.py
+
+# Om een app van te maken:
+# sluit je telefoon aan, zorg dat je android developer options aan heb staan op je tellie
+# (google ff hoe dat moet)
+
+# je hebt de volgende instalaties nodig, dit zou een probleem kunnen zijn op de uni... (vanwege toestemming)
+# probeer eerst deze stap over te slaan
+sudo apt-get install zlib1g-dev
+sudo apt-get install git-all 				 #duurt ff
+sudo apt-get install autoconf
+sudo apt install build-essential libltdl-dev libffi-dev libssl-dev
+
+# check of java er al is
+javac --version
+
+# zo niet, (zou ook een probleem kunnen zijn op de uni)
+sudo apt-get install openjdk-8-jdk
+
+# En nu eindelijk
+# dit duurt de eerste keer eeeeerg lang (denk > 10min), maar alleen de eerste keer hoor
+buildozer -v android debug deploy run
+
+# Klaar met kloten voor de dag, sluit de virtual environment af
+deactivate
+
+# de volgende keer dat je eraan werkt, hoef je tuurlijk niet alle instalaties enzo 
+# opnieuw te doen
+cd wow
+source env/bin/activate
+gedit main.py main.kv (andere troep hier) &
+# meteen ready to go
+
+
+
+

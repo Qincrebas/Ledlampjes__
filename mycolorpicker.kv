@@ -1,0 +1,20 @@
+<-ColorWheel>:
+    _origin: self.center
+    _radius: 0.45 * min(self.size)
+
+<-ColorPicker>:
+    foreground_color: (1, 1, 1, 1) if self.hsv[2] * root.color[3] < .5 else (0, 0, 0, 1)
+    wheel: wheel
+    BoxLayout:
+        orientation: 'vertical' if root.width < root.height else 'horizontal'
+        spacing: '5sp'
+        ColorWheel:
+            id: wheel
+            color: root.color
+            on_color: root.set_color(args[1][:3])
+            
+<MyColorPicker@BoxLayout>:
+    orientation: "vertical"
+    spacing: dp(20)
+    ColorWheel:
+        id: wheel
