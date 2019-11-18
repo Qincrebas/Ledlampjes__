@@ -47,10 +47,10 @@ requirements = python3,kivy==master,android,kivymd
 #garden_requirements = navigationdrawer
 
 # (str) Presplash of the application
-presplash.filename = logo.png
+presplash.filename = circle-cropped.png
 
 # (str) Icon of the application
-icon.filename = logo.png
+icon.filename = circle-cropped.png
 
 # (str) Supported orientation (one of landscape, sensorLandscape, portrait or all)
 orientation = portrait

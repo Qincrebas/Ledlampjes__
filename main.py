@@ -7,6 +7,12 @@ from kivy.core.window import Window
 from kivy.uix.textinput import TextInput
 from kivymd.theming import ThemeManager
 from kivy.animation import Animation
+#from jnius import cast,autoclass
+
+#BluetoothAdapter = autoclass('android.bluetooth.BluetoothAdapter')
+#BluetoothDevice = autoclass('android.bluetooth.BluetoothDevice')
+#BluetoothSocket = autoclass('android.bluetooth.BluetoothSocket')
+#UUID = autoclass('java.util.UUID')
 
 
 
@@ -17,9 +23,14 @@ class RootWidget(ScreenManager):
         super().__init__(**kwargs)
         Window.bind(on_keyboard = self.android_back_click)
         self.previousscreen = "main"
-        #Clock.schedule_interval(self.animation,1)
-        
-
+        #er is iets fout met die classes nog
+        Clock.schedule_interval(self.animation,1)
+   #voor de knop naar de juiste kleur gaan 
+    def animation(self, dtx):
+        anim = Animation(btn_size=(60,60), t= 'in_quad', duration=0.5)
+        anim +=Animation(btn_size=(70,70), t ='in_quad', duration=0.5)
+        tgt = self.ids.bluetooth
+        anim.start(tgt)
         
     def android_back_click(self, window, key, *largs):
         if key == 27 or key == 32:
@@ -29,26 +40,50 @@ class RootWidget(ScreenManager):
 class MainScreen(Screen):
     colorpicker = ObjectProperty(None)
     color = ListProperty([1,0,0,1])
-    def connectbluetooth(self):
-        pass
-        
+    
     #hier wil ik nog dat de kleur word die je hebt aangetikt in het wheele maar daarvoor heb ik die id & root nodig enzo maar dat gaat net niet goed.
     def animate_button(self, widget, *args):
         anim = Animation(background_color=(0,0,0,1))
         anim.start(widget)
-        anim.bind(on_complete=self.callback)
-    '''    
-    def animation(self, dtx):
-        anim = Animation(btn_size=(60,60), t= 'in_quad', duration=0.5)
-        anim +=Animation(btn_size=(70,70), t ='in_quad', duration=0.5)
-        tgt = self.ids.cta
-        anim.start(tgt)
-    '''
+        anim.bind(on_complete=self.callback)   
+        
+
+    
     def sentcolor(self):
         print (self.colorpicker.color)
     def callback(self, *args):
         pass
-        #background.color: self.colorpicker.color
+        #background.color: self.colorpicker.color    
+    
+    def connectbluetooth(name):
+        paired_devices = BluetoothAdapter.getDefailtAdapater().getBoundedDevices().toArray
+        socket = None
+        for device in paired_devices:
+            if device.getName() == name:
+                socket = device.createRfcommSocketToServiceRecord(
+                    UUID.fromString("00001101-0000-1000-8000-00805F9B34FB"))
+                recv_stream = socket.getInputStream()
+                send_stream = socket.getOutputStream()
+                break
+        socket.connect()
+        return recv_stream, send_stream
+    
+    def build(self):
+        self.recv_stream, self.send_stream = connectbluetooth('linvor')
+        return Builder.load_string(kv)
+    
+    def send(self, cmd):
+        self.send_stream.write('{}\n'.format(cmd))
+        self.send_stream.flush()
+        
+    def reset(self, btns):
+        for btn in btns:
+            btn.state = 'normal'
+        self.send('0\n')
+#Bluetooth().run()
+
+        
+
 
 
 

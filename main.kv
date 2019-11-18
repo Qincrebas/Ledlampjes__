@@ -17,10 +17,10 @@ RootWidget:
     
     BoxLayout:
         orientation: "vertical"
-        padding: dp(80)
+        padding: dp(50)
         canvas:
             Color:
-                rgba: 0.5,0,0,0.5
+                rgba: 1,1,1,.5
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -29,8 +29,8 @@ RootWidget:
             size_hint_y: None
         BoxLayout:
             orientation: "vertical"
-            spacing: dp(50)
-            padding: dp(20)
+            spacing: dp(20)
+            #padding: dp(20)
             Button:
                 id: colourbutton
                 background_down:
@@ -58,14 +58,15 @@ RootWidget:
                     root.manager.current = "Pattern"
             
             FloatButton:
-                id: cta
-                text: 'Bluetooth'        
-           # Button:
-           #     text: "Bluetooth connector"
-           #     on_release:
-           #         root.connectbluetooth()
-           #     size_hint: 0.5,1
-           #     pos_hint: {'center_x':.5}    
+                id: bluetooth
+                text: 'Bluetooth'      
+                #on_release: root.connect.bluetooth(self.text)
+                
+            FloatButton__:
+                id: reset
+                text: 'reset bluetooth'
+                #on_release: root.reset([bluetooth])
+   
 <colourscreen>:
     colorpicker: colorpicker
     searchbar: searchbar
@@ -110,12 +111,13 @@ RootWidget:
     btn_size: (100,100)
     size:(100,100)
     bg_color: (0.404, 0.227, 0.718 ,1)
+    pos_hint: {'x': 0.1}
     Button:
+        pos_hint: {'x':1, 'y':0}
         text: float_root.text
         markup: True
         size_hint: (None, None)
         size: float_root.btn_size
-        pos_hint: {'x': .8 , 'y': 0.5}
         background_normal: ''
         background_color: 0, 0, 0, 0
         canvas.before:
@@ -125,8 +127,51 @@ RootWidget:
                 size: self.size
                 pos: self.pos
 
-https://www.youtube.com/watch?v=23ffGS_J4kk
+#Die posities van die knopjes snap ik geen reet van :(
+<FloatButton__@FloatLayout>:
+    id: float_root
+    size_hint: (None, None)
+    text: ''
+    btn_size: (100,100)
+    size:(100,100)
+    bg_color: (0.404, 0.227, 0.718 ,1)
+    pos_hint: {'x': 1}
+    Button:
+        text: float_root.text
+        markup: True
+        size_hint: (None, None)
+        size: float_root.btn_size
+        pos_hint: {'x': 5 , 'y': 1}
+        background_normal: ''
+        background_color: 0, 0, 0, 0
+        canvas.before:
+            Color:
+                rgba: float_root.bg_color
+            Ellipse:
+                size: self.size
+                pos: self.pos
+
+#https://www.youtube.com/watch?v=23ffGS_J4kk
 # Hier staat wat ik wil maar ook die lukt net niet
 <patternscreen>:
     Label:
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
         
