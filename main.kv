@@ -10,6 +10,8 @@ RootWidget:
         name: "colour"
     patternscreen:
         name: "Pattern"
+    bluetoothscreen:
+        name: "bluetooth__"
         
     
 <MainScreen>:
@@ -56,16 +58,25 @@ RootWidget:
                     root.manager.transition = NoTransition()
                     app.root.previousscreen = root.manager.current
                     root.manager.current = "Pattern"
-            
-            FloatButton:
-                id: bluetooth
-                text: 'Bluetooth'      
-                #on_release: root.connect.bluetooth(self.text)
+                    
+            BoxLayout:
+                spacing : dp(300)
+
+                orientation: 'horizontal'
+
+                FloatButton:
+                    id: reset
+                    text: 'reset bluetooth'
+                    #on_release:
                 
-            FloatButton__:
-                id: reset
-                text: 'reset bluetooth'
-                #on_release: root.reset([bluetooth])
+                FloatButton:
+                    id: bluetooth
+                    text: 'Bluetooth'
+
+                    #app.root.previousscreen = root.manager.current
+                    #root.manager.current = "bluetooth__"
+                    
+
    
 <colourscreen>:
     colorpicker: colorpicker
@@ -105,48 +116,23 @@ RootWidget:
 
 
 <FloatButton@FloatLayout>:
-    id: float_root
     size_hint: (None, None)
     text: ''
     btn_size: (100,100)
     size:(100,100)
     bg_color: (0.404, 0.227, 0.718 ,1)
-    pos_hint: {'x': 0.1}
-    Button:
-        pos_hint: {'x':1, 'y':0}
-        text: float_root.text
-        markup: True
-        size_hint: (None, None)
-        size: float_root.btn_size
-        background_normal: ''
-        background_color: 0, 0, 0, 0
-        canvas.before:
-            Color:
-                rgba: float_root.bg_color
-            Ellipse:
-                size: self.size
-                pos: self.pos
 
-#Die posities van die knopjes snap ik geen reet van :(
-<FloatButton__@FloatLayout>:
-    id: float_root
-    size_hint: (None, None)
-    text: ''
-    btn_size: (100,100)
-    size:(100,100)
-    bg_color: (0.404, 0.227, 0.718 ,1)
-    pos_hint: {'x': 1}
     Button:
-        text: float_root.text
+        pos_hint: {'center_x':2, 'center_y':.5}
+        text: root.text
         markup: True
         size_hint: (None, None)
-        size: float_root.btn_size
-        pos_hint: {'x': 5 , 'y': 1}
+        size: root.btn_size
         background_normal: ''
         background_color: 0, 0, 0, 0
         canvas.before:
             Color:
-                rgba: float_root.bg_color
+                rgba: root.bg_color
             Ellipse:
                 size: self.size
                 pos: self.pos
@@ -156,7 +142,9 @@ RootWidget:
 <patternscreen>:
     Label:
     
-    
+
+<bluetoothscreen>:
+    Label:
     
     
     

@@ -23,13 +23,20 @@ class RootWidget(ScreenManager):
         super().__init__(**kwargs)
         Window.bind(on_keyboard = self.android_back_click)
         self.previousscreen = "main"
-        #er is iets fout met die classes nog
-        Clock.schedule_interval(self.animation,1)
+        Clock.schedule_interval(self.animation,2)
+        Clock.schedule_interval(self.animation_, 2)
+        
    #voor de knop naar de juiste kleur gaan 
     def animation(self, dtx):
-        anim = Animation(btn_size=(60,60), t= 'in_quad', duration=0.5)
-        anim +=Animation(btn_size=(70,70), t ='in_quad', duration=0.5)
-        tgt = self.ids.bluetooth
+        anim = Animation(btn_size=(80,80), t= 'in_quad', duration=1)
+        anim +=Animation(btn_size=(100,100), t ='in_quad', duration=1)
+        tgt = self.mainscreen__.ids.bluetooth
+        anim.start(tgt)
+        
+    def animation_(self, dtx):
+        anim = Animation(btn_size=(80,80), t= 'in_quad', duration=1)
+        anim +=Animation(btn_size=(100,100), t ='in_quad', duration=1)
+        tgt = self.mainscreen__.ids.reset
         anim.start(tgt)
         
     def android_back_click(self, window, key, *largs):
@@ -44,10 +51,10 @@ class MainScreen(Screen):
     #hier wil ik nog dat de kleur word die je hebt aangetikt in het wheele maar daarvoor heb ik die id & root nodig enzo maar dat gaat net niet goed.
     def animate_button(self, widget, *args):
         anim = Animation(background_color=(0,0,0,1))
+        anim += Animation(background_color=(1,1,1,0.50))
         anim.start(widget)
         anim.bind(on_complete=self.callback)   
-        
-
+     
     
     def sentcolor(self):
         print (self.colorpicker.color)
@@ -100,6 +107,7 @@ class colourscreen(Screen):
     def searchcolor(self):
         if (self.searchbar.text == 'zwart' or 'Zwart' or 'black' or 'Black'):
             #ik wil hier terug naar de kv om de achtergrond te veranderen maar weet niet hoe dat moet
+            #text = 'very good'
             pass
         elif self.searchbar.text == 'wit':
             pass
@@ -108,6 +116,9 @@ class colourscreen(Screen):
 
 
 class patternscreen(Screen):
+    pass
+
+class bluetoothscreen(Screen):
     pass
         
 class QinApp(App):
